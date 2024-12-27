@@ -7,23 +7,55 @@ body {
   color: #333;
 }
 
+/* Navbar Styles */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #007bff;
+  padding: 15px 20px;
+  color: white;
+}
+
+.navbar-logo h2 {
+  margin: 0;
+  font-size: 24px;
+}
+
+.navbar-links {
+  display: flex;
+  gap: 20px;
+}
+
+.navbar-link {
+  color: white;
+  text-decoration: none;
+  font-size: 16px;
+}
+
+.navbar-link:hover {
+  text-decoration: underline;
+}
+
 /* Auth Page Styles */
 .auth-page {
   display: flex;
   justify-content: center;
   align-items: center;
   height: 100vh;
-  background-image: linear-gradient(135deg, #f3f4f7, #ffffff);
+  /* background-image: url("../image/login-page-bg.webp"); */
+  background-repeat: no-repeat;
+  background-size: cover;
   padding: 20px;
 }
 
 /* Auth Card Styles */
 .auth-card {
-  width: 400px;
+  width: 500px;
   background: #ffffff;
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
   border-radius: 10px;
-  padding: 30px;
+  padding: 70px;
   text-align: center;
 }
 
@@ -32,13 +64,13 @@ body {
   font-size: 24px;
   font-weight: bold;
   color: #333;
-  margin-bottom: 10px;
+  margin-bottom: 30px;
 }
 
 .auth-subtitle {
   font-size: 16px;
   color: #777;
-  margin-bottom: 20px;
+  margin-bottom: 30px;
 }
 
 /* Form Styles */
@@ -49,8 +81,8 @@ body {
 }
 
 .auth-input {
-  padding: 12px;
-  font-size: 14px;
+  padding: 16px;
+  font-size: 20px;
   border: 1px solid #ddd;
   border-radius: 5px;
 }
@@ -78,20 +110,29 @@ body {
 
 /* Google Button */
 .google-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px; /* Space between logo and text */
   width: 100%;
-  padding: 12px;
+  padding: 6px;
   font-size: 16px;
-  background-color: #4285f4;
-  color: white;
-  border: none;
-  border-radius: 5px;
+  background-color: #ffffff;
+  color: #444444;
+  border: #7e7d7d solid;
+  border-radius: 10px;
   cursor: pointer;
   margin-bottom: 20px;
   transition: background-color 0.3s ease;
 }
 
 .google-button:hover {
-  background-color: #357ae8;
+  background-color: #e2e2e4;
+}
+
+.google-logo {
+  width: 35px;
+  height: 35px;
 }
 
 /* Footer Text */
@@ -140,6 +181,80 @@ body {
   color: #d66900;
 }
 
+/* Phone Number Container */
+.phone-number-container {
+  display: flex;
+  align-items: center;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  overflow: hidden; /* Ensures a clean visual appearance */
+}
+
+/* Country Code Input */
+.country-code-input {
+  width: 60px;
+  padding: 14px 8px;
+  font-size: 20px;
+  text-align: center;
+  color: #555; /* Slightly darker gray for text */
+  pointer-events: none; /* Make input non-editable */
+  background-color: #f8f8f8; /* Light gray background */
+  /* border: 1px solid #f8f8f8; */
+  border: 1px solid white;
+}
+
+/* Mobile Number Input */
+.mobile-number-input {
+  flex-grow: 1;
+  padding: 16px;
+  font-size: 20px;
+  border: none; /* Remove default border */
+  outline: none; /* Remove focus outline */
+  color: #333; /* Text color */
+  background-color: #f8f8f8;
+  border-left: 1px solid #0003;
+}
+
+.mobile-number-input:focus {
+  box-shadow: 0 0 3px rgba(245, 124, 0, 0.5); /* Subtle focus effect */
+}
+
+/* otp */
+/* OTP Section */
+.otp-container {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.otp-box {
+  width: 40px;
+  height: 40px;
+  font-size: 18px;
+  text-align: center;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background: rgba(255, 255, 255, 0.6); /* Match the input style */
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+  outline: none;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.otp-box:focus {
+  border-color: #f57c00;
+  box-shadow: 0 0 3px rgba(245, 124, 0, 0.5);
+}
+
+.otp-box::placeholder {
+  color: #aaa;
+  opacity: 0.6;
+}
+
+.otp-box:hover {
+  border-color: #d66900;
+}
+
 /* Responsive Design */
 @media (max-width: 480px) {
   .auth-card {
@@ -156,6 +271,12 @@ body {
   }
 
   .have-account .link-button {
+    font-size: 16px;
+  }
+
+  .otp-box {
+    width: 35px;
+    height: 35px;
     font-size: 16px;
   }
 }

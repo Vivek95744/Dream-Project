@@ -33,7 +33,10 @@ const Signin = () => {
     <div className="auth-page">
       <div className="auth-card">
         <h1 className="auth-title">Login</h1>
-        <button className="google-button">Login with Google</button>
+        <button className="google-button">
+          <img src="/logo.svg" alt="Google Logo" className="google-logo" />
+          Sign up with Google
+        </button>
         <form onSubmit={handleSignin} className="auth-form">
           <input
             type="email"
