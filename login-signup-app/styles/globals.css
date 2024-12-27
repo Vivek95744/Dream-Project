@@ -1,0 +1,161 @@
+/* General Reset */
+body {
+  font-family: "Arial", sans-serif;
+  background-color: #f8f9fa;
+  margin: 0;
+  padding: 0;
+  color: #333;
+}
+
+/* Auth Page Styles */
+.auth-page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-image: linear-gradient(135deg, #f3f4f7, #ffffff);
+  padding: 20px;
+}
+
+/* Auth Card Styles */
+.auth-card {
+  width: 400px;
+  background: #ffffff;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  padding: 30px;
+  text-align: center;
+}
+
+/* Titles and Subtitles */
+.auth-title {
+  font-size: 24px;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.auth-subtitle {
+  font-size: 16px;
+  color: #777;
+  margin-bottom: 20px;
+}
+
+/* Form Styles */
+.auth-form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.auth-input {
+  padding: 12px;
+  font-size: 14px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}
+
+.auth-input:focus {
+  border-color: #f57c00;
+  outline: none;
+  box-shadow: 0 0 3px rgba(245, 124, 0, 0.5);
+}
+
+.auth-button {
+  padding: 12px;
+  font-size: 16px;
+  background-color: #f57c00;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.auth-button:hover {
+  background-color: #d66900;
+}
+
+/* Google Button */
+.google-button {
+  width: 100%;
+  padding: 12px;
+  font-size: 16px;
+  background-color: #4285f4;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-bottom: 20px;
+  transition: background-color 0.3s ease;
+}
+
+.google-button:hover {
+  background-color: #357ae8;
+}
+
+/* Footer Text */
+.auth-footer {
+  font-size: 14px;
+  margin-top: 15px;
+  color: #777;
+}
+
+.auth-link {
+  color: #f57c00;
+  text-decoration: none;
+}
+
+.auth-link:hover {
+  text-decoration: underline;
+}
+
+/* Inline Fields for Step 2 */
+.inline-fields {
+  display: flex;
+  gap: 10px;
+}
+
+.inline-input {
+  width: 50%;
+}
+
+/* "Have an Account?" Link Styles */
+.have-account {
+  margin-top: 15px;
+  text-align: center;
+}
+
+.have-account .link-button {
+  color: #f57c00;
+  background: none;
+  border: none;
+  cursor: pointer;
+  text-decoration: underline;
+  font-size: 14px;
+}
+
+.have-account .link-button:hover {
+  text-decoration: none;
+  color: #d66900;
+}
+
+/* Responsive Design */
+@media (max-width: 480px) {
+  .auth-card {
+    width: 100%;
+    padding: 20px;
+  }
+
+  .inline-fields {
+    flex-direction: column;
+  }
+
+  .inline-input {
+    width: 100%;
+  }
+
+  .have-account .link-button {
+    font-size: 16px;
+  }
+}
