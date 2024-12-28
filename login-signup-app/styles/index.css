@@ -1,0 +1,47 @@
+/* Basic styling for the slider container */
+.slider-container {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+}
+
+.slider {
+  display: flex;
+  width: 100%;
+}
+
+.slide {
+  min-width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.slide-image {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+}
+
+/* Dot Indicator */
+.dot-indicator {
+  position: absolute;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  z-index: 10;
+}
+
+.dot {
+  width: 10px;
+  height: 10px;
+  background-color: rgba(255, 255, 255, 0.5);
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.dot.active {
+  background-color: white;
+}

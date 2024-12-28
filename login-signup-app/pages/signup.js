@@ -66,9 +66,14 @@ const Signup = () => {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [passwordError, setPasswordError] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+
+  const togglePasswordVisibility = () => setShowPassword(!showPassword);
+  const toggleConfirmPasswordVisibility = () =>
+    setShowConfirmPassword(!showConfirmPassword);
 
   const mobileInputRef = useRef(null);
-  const otpInputRef = useRef(null);
   const firstNameInputRef = useRef(null);
 
   useEffect(() => {
@@ -78,12 +83,6 @@ const Signup = () => {
   }, []);
 
   useEffect(() => {
-    if (step === 2 && otpInputRef.current) {
-      otpInputRef.current.focus();
-    }
-  }, [step]);
-
-  useEffect(() => {
     if (step === 3 && firstNameInputRef.current) {
       firstNameInputRef.current.focus();
     }
@@ -91,7 +90,7 @@ const Signup = () => {
 
   const isValidMobile = (number) => /^[0-9]{10}$/.test(number);
   const isValidPassword = (pass) =>
-    /^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/.test(pass);
+    /^(?=.[A-Z])(?=.\d)(?=.[@$!%?&])[A-Za-z\d@$!%*?&]{8,}$/.test(pass);
   const isValidEmail = (email) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 
   const handleGetOtp = (e) => {
@@ -154,6 +153,14 @@ const Signup = () => {
     }
   };
 
+  // Function to format mobile number as +91XXXXXXXX1 (where middle digits are hidden)
+  const formatMobileNumber = (number) => {
+    if (number.length === 10) {
+      return `+91${number.slice(0, 4)}****${number.slice(8)}`;
+    }
+    return `+91${number}`;
+  };
+
   return (
     <div className="auth-page">
       <div className="auth-card">
@@ -205,6 +212,10 @@ const Signup = () => {
         {step === 2 && (
           <>
             <h2>Enter OTP</h2>
+            <p>
+              A one-time password has been sent to this number{" "}
+              {formatMobileNumber(mobile)}.
+            </p>
             <form onSubmit={handleNext} className="auth-form">
               <OtpInput
                 length={6}
@@ -216,6 +227,11 @@ const Signup = () => {
                 Next
               </button>
             </form>
+            <div className="resend-otp">
+              <p>
+                Didn’t get the OTP? <a href="#">Resend OTP</a>
+              </p>
+            </div>
             <div className="have-account">
               Already have an account?{" "}
               <button
@@ -227,6 +243,7 @@ const Signup = () => {
             </div>
           </>
         )}
+
         {step === 3 && (
           <form onSubmit={handleSignup} className="auth-form">
             <div className="inline-fields">
@@ -256,26 +273,53 @@ const Signup = () => {
               onChange={(e) => setEmail(e.target.value)}
               className="auth-input"
             />
-            <input
-              type="password"
-              placeholder="Password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-              className="auth-input"
-            />
-            <input
-              type="password"
-              placeholder="Confirm Password"
-              value={confirmPassword}
-              onChange={(e) => setConfirmPassword(e.target.value)}
-              required
-              className="auth-input"
-            />
+            <div className="password-field">
+              <input
+                type={showPassword ? "text" : "password"}
+                placeholder="Password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+                className="auth-input"
+              />
+              <button
+                type="button"
+                className="toggle-password-inside"
+                onClick={togglePasswordVisibility}
+              >
+                <img
+                  src={showPassword ? "/eye-closed.png" : "/eye-open.png"}
+                  alt={showPassword ? "Hide Password" : "Show Password"}
+                  className="toggle-password-icon"
+                />
+              </button>
+            </div>
+            <div className="password-field">
+              <input
+                type={showConfirmPassword ? "text" : "password"}
+                placeholder="Confirm Password"
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
+                required
+                className="auth-input"
+              />
+              <button
+                type="button"
+                className="toggle-password-inside"
+                onClick={toggleConfirmPasswordVisibility}
+              >
+                <img
+                  src={
+                    showConfirmPassword ? "/eye-closed.png" : "/eye-open.png"
+                  }
+                  alt={showConfirmPassword ? "Hide Password" : "Show Password"}
+                  className="toggle-password-icon"
+                />
+              </button>
+            </div>
             {passwordError && (
               <div className="error-message">{passwordError}</div>
             )}
-
             <button type="submit" className="auth-button">
               Sign Up
             </button>
