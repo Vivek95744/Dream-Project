@@ -1,5 +1,5 @@
 import Link from "next/link";
-import "../styles/navbar.css"; // Import CSS
+// Import CSS
 
 export default function Navbar() {
   return (
@@ -18,17 +18,17 @@ export default function Navbar() {
             </Link>
           </li>
           <li>
-            <Link href="/notice" className="navbar-link">
+            <Link href="/today-notice" className="navbar-link">
               Today's Notice
             </Link>
           </li>
           <li>
-            <Link href="/about" className="navbar-link">
+            <Link href="/about-us" className="navbar-link">
               About Us
             </Link>
           </li>
           <li>
-            <Link href="/contact" className="navbar-link">
+            <Link href="/contact-us" className="navbar-link">
               Contact Us
             </Link>
           </li>
