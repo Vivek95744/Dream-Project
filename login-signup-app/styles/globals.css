@@ -8,34 +8,6 @@ body {
 }
 
 /* Navbar Styles */
-.navbar {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background-color: #007bff;
-  padding: 15px 20px;
-  color: white;
-}
-
-.navbar-logo h2 {
-  margin: 0;
-  font-size: 24px;
-}
-
-.navbar-links {
-  display: flex;
-  gap: 20px;
-}
-
-.navbar-link {
-  color: white;
-  text-decoration: none;
-  font-size: 16px;
-}
-
-.navbar-link:hover {
-  text-decoration: underline;
-}
 
 /* Auth Page Styles */
 .auth-page {
@@ -43,7 +15,7 @@ body {
   justify-content: center;
   align-items: center;
   height: 100vh;
-  /* background-image: url("../image/login-page-bg.webp"); */
+  background-image: url("../image/login-page-bg.webp");
   background-repeat: no-repeat;
   background-size: cover;
   padding: 20px;
@@ -217,6 +189,14 @@ body {
 
 .mobile-number-input:focus {
   box-shadow: 0 0 3px rgba(245, 124, 0, 0.5); /* Subtle focus effect */
+}
+
+.error-message {
+  color: red;
+  font-size: 14px;
+  /* margin-top: 5px; */
+  position: relative;
+  /* left: -25px; */
 }
 
 /* otp */

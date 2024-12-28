@@ -1,19 +1,25 @@
 "use client";
 
 import Link from "next/link";
-import React, {useState, useEffect} from "react";
-import {useRouter} from "next/navigation"; // Import useRouter for navigation
+import React, {useState, useEffect, useRef} from "react";
+import {useRouter} from "next/navigation";
 
 const Signin = () => {
-  const router = useRouter(); // Initialize the router
+  const router = useRouter();
+  const emailInputRef = useRef(null);
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  // UseEffect to handle back navigation
   useEffect(() => {
-    // Prevent back navigation from login page
+    if (emailInputRef.current) {
+      emailInputRef.current.focus(); // Autofocus the email input field
+    }
+  }, []);
+
+  useEffect(() => {
     const handleBack = () => {
-      router.replace("/"); // Redirect to home or navigation page on back navigation
+      router.replace("/"); // Redirect to home page on back navigation
     };
 
     window.addEventListener("popstate", handleBack);
@@ -39,6 +45,7 @@ const Signin = () => {
         </button>
         <form onSubmit={handleSignin} className="auth-form">
           <input
+            ref={emailInputRef} // Autofocus the email input field
             type="email"
             placeholder="Email Address"
             value={email}
@@ -64,8 +71,8 @@ const Signin = () => {
             href="/signup"
             className="auth-link"
             onClick={(e) => {
-              e.preventDefault(); // Prevent going to signup page if already on signup
-              router.replace("/signup"); // Use replace to avoid back navigation
+              e.preventDefault();
+              router.replace("/signup");
             }}
           >
             Sign up

@@ -1,10 +1,12 @@
 "use client";
 
-import React, {useState, useEffect} from "react";
-import {useRouter} from "next/navigation"; // Import useRouter for navigation
+import React, {useState, useEffect, useRef} from "react";
+import {useRouter} from "next/navigation";
 
-const OtpInput = ({length = 6, onOtpChange}) => {
+const OtpInput = ({length = 6, onOtpChange, errorMessage}) => {
   const [otp, setOtp] = useState(Array(length).fill(""));
+
+  const otpRefs = useRef([]);
 
   const handleChange = (value, index) => {
     if (isNaN(value)) return;
@@ -14,7 +16,7 @@ const OtpInput = ({length = 6, onOtpChange}) => {
     setOtp(updatedOtp);
 
     if (value && index < length - 1) {
-      document.getElementById(`otp-input-${index + 1}`).focus();
+      otpRefs.current[index + 1].focus();
     }
 
     onOtpChange(updatedOtp.join(""));
@@ -22,9 +24,15 @@ const OtpInput = ({length = 6, onOtpChange}) => {
 
   const handleKeyDown = (e, index) => {
     if (e.key === "Backspace" && !otp[index] && index > 0) {
-      document.getElementById(`otp-input-${index - 1}`).focus();
+      otpRefs.current[index - 1].focus();
     }
   };
+
+  useEffect(() => {
+    if (otpRefs.current[0]) {
+      otpRefs.current[0].focus();
+    }
+  }, []);
 
   return (
     <div className="otp-container">
@@ -32,6 +40,7 @@ const OtpInput = ({length = 6, onOtpChange}) => {
         <input
           key={index}
           id={`otp-input-${index}`}
+          ref={(el) => (otpRefs.current[index] = el)}
           type="text"
           maxLength="1"
           value={digit}
@@ -45,66 +54,104 @@ const OtpInput = ({length = 6, onOtpChange}) => {
 };
 
 const Signup = () => {
-  const router = useRouter(); // Initialize the router
-  const [step, setStep] = useState(1); // Step 1: Enter Mobile; Step 2: Enter OTP; Step 3: Enter Details
+  const router = useRouter();
+  const [step, setStep] = useState(1);
   const [mobile, setMobile] = useState("");
+  const [mobileError, setMobileError] = useState("");
   const [otp, setOtp] = useState("");
+  const [otpError, setOtpError] = useState("");
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [passwordError, setPasswordError] = useState("");
+
+  const mobileInputRef = useRef(null);
+  const otpInputRef = useRef(null);
+  const firstNameInputRef = useRef(null);
+
+  useEffect(() => {
+    if (mobileInputRef.current) {
+      mobileInputRef.current.focus();
+    }
+  }, []);
+
+  useEffect(() => {
+    if (step === 2 && otpInputRef.current) {
+      otpInputRef.current.focus();
+    }
+  }, [step]);
+
+  useEffect(() => {
+    if (step === 3 && firstNameInputRef.current) {
+      firstNameInputRef.current.focus();
+    }
+  }, [step]);
 
   const isValidMobile = (number) => /^[0-9]{10}$/.test(number);
   const isValidPassword = (pass) =>
     /^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/.test(pass);
-
-  // UseEffect to handle back navigation
-  useEffect(() => {
-    // Prevent back navigation from signup page
-    const handleBack = () => {
-      router.replace("/login"); // Redirect to login page on back navigation
-    };
-
-    window.addEventListener("popstate", handleBack);
-
-    return () => {
-      window.removeEventListener("popstate", handleBack);
-    };
-  }, [router]);
+  const isValidEmail = (email) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 
   const handleGetOtp = (e) => {
     e.preventDefault();
     if (!isValidMobile(mobile)) {
-      alert("Please enter a valid 10-digit mobile number.");
+      setMobileError("Please enter a valid 10-digit mobile number.");
       return;
     }
+    setMobileError("");
     setStep(2);
   };
 
   const handleNext = (e) => {
     e.preventDefault();
     if (otp.length !== 6) {
-      alert("Please enter a valid 6-digit OTP.");
+      setOtpError("Please enter a valid 6-digit OTP.");
       return;
     }
+    setOtpError("");
     setStep(3);
   };
 
   const handleSignup = (e) => {
     e.preventDefault();
+    let isValid = true;
+    setPasswordError("");
+
+    if (!firstName) {
+      setMobileError("Please enter your first name.");
+      isValid = false;
+    }
+    if (!lastName) {
+      setOtpError("Please enter your last name.");
+      isValid = false;
+    }
+    if (!isValidEmail(email)) {
+      setEmail("");
+      isValid = false;
+    }
     if (!isValidPassword(password)) {
-      alert(
+      setPasswordError(
         "Password must contain at least 1 uppercase letter, 1 number, and 1 symbol."
       );
-      return;
+      isValid = false;
     }
     if (password !== confirmPassword) {
-      alert("Passwords do not match.");
-      return;
+      setPasswordError("Passwords do not match.");
+      isValid = false;
     }
 
-    router.replace("/login"); // Go to login page after signup
+    if (isValid) {
+      router.replace("/login");
+    }
+  };
+
+  const handleMobileInput = (e) => {
+    const value = e.target.value;
+    if (/^[0-9]*$/.test(value)) {
+      setMobile(value);
+    }
   };
 
   return (
@@ -127,14 +174,18 @@ const Signup = () => {
                   className="country-code-input"
                 />
                 <input
+                  ref={mobileInputRef}
                   type="text"
                   placeholder="Mobile Number"
                   value={mobile}
-                  onChange={(e) => setMobile(e.target.value)}
+                  onChange={handleMobileInput}
                   required
                   className="mobile-number-input"
                 />
               </div>
+              {mobileError && (
+                <div className="error-message">{mobileError}</div>
+              )}
               <button type="submit" className="auth-button">
                 Get OTP
               </button>
@@ -143,7 +194,7 @@ const Signup = () => {
             <div className="have-account">
               Already have an account?{" "}
               <button
-                onClick={() => router.replace("/login")} // Prevent back navigation
+                onClick={() => router.replace("/login")}
                 className="link-button"
               >
                 Login
@@ -153,9 +204,14 @@ const Signup = () => {
         )}
         {step === 2 && (
           <>
-            <h2>Enter Otp</h2>
+            <h2>Enter OTP</h2>
             <form onSubmit={handleNext} className="auth-form">
-              <OtpInput length={6} onOtpChange={setOtp} />
+              <OtpInput
+                length={6}
+                onOtpChange={setOtp}
+                errorMessage={otpError}
+              />
+              {otpError && <div className="error-message">{otpError}</div>}
               <button type="submit" className="auth-button">
                 Next
               </button>
@@ -163,7 +219,7 @@ const Signup = () => {
             <div className="have-account">
               Already have an account?{" "}
               <button
-                onClick={() => router.replace("/login")} // Prevent back navigation
+                onClick={() => router.replace("/login")}
                 className="link-button"
               >
                 Login
@@ -175,6 +231,7 @@ const Signup = () => {
           <form onSubmit={handleSignup} className="auth-form">
             <div className="inline-fields">
               <input
+                ref={firstNameInputRef}
                 type="text"
                 placeholder="First Name"
                 value={firstName}
@@ -191,12 +248,12 @@ const Signup = () => {
                 className="auth-input inline-input"
               />
             </div>
+
             <input
               type="email"
               placeholder="Email Address"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              required
               className="auth-input"
             />
             <input
@@ -215,6 +272,10 @@ const Signup = () => {
               required
               className="auth-input"
             />
+            {passwordError && (
+              <div className="error-message">{passwordError}</div>
+            )}
+
             <button type="submit" className="auth-button">
               Sign Up
             </button>

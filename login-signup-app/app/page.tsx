@@ -1,27 +1,49 @@
 import Link from "next/link";
+import "../styles/navbar.css"; // Import CSS
 
-export default function Home() {
+export default function Navbar() {
   return (
-    <div>
+    <header>
       <nav className="navbar">
+        {/* Left: Logo */}
         <div className="navbar-logo">
           <h2>MyApp</h2>
         </div>
-        <div className="navbar-links">
-          <Link href="/login" className="navbar-link">
+
+        {/* Center: Links */}
+        <ul className="navbar-links">
+          <li>
+            <Link href="/" className="navbar-link">
+              Home
+            </Link>
+          </li>
+          <li>
+            <Link href="/notice" className="navbar-link">
+              Today's Notice
+            </Link>
+          </li>
+          <li>
+            <Link href="/about" className="navbar-link">
+              About Us
+            </Link>
+          </li>
+          <li>
+            <Link href="/contact" className="navbar-link">
+              Contact Us
+            </Link>
+          </li>
+        </ul>
+
+        {/* Right: Buttons */}
+        <div className="navbar-buttons">
+          <Link href="/login" className="btn btn-login">
             Login
           </Link>
-          <Link href="/signup" className="navbar-link">
+          <Link href="/signup" className="btn btn-signup">
             Sign Up
           </Link>
         </div>
       </nav>
-      {/* <div className="home-content">
-        <h1>Welcome to Login and Signup App</h1>
-        <p>
-          Navigate to <a href="/login">Login</a> or <a href="/signup">Signup</a>
-        </p>
-      </div> */}
-    </div>
+    </header>
   );
 }
