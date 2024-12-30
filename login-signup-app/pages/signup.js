@@ -28,6 +28,17 @@ const OtpInput = ({length = 6, onOtpChange, errorMessage}) => {
     }
   };
 
+  const handlePaste = (e) => {
+    e.preventDefault();
+    const pastedData = e.clipboardData.getData("Text").slice(0, length);
+    const otpArray = Array.from(pastedData.padEnd(length, ""));
+    setOtp(otpArray);
+    otpArray.forEach((_, index) => {
+      if (otpRefs.current[index]) otpRefs.current[index].focus();
+    });
+    onOtpChange(otpArray.join(""));
+  };
+
   useEffect(() => {
     if (otpRefs.current[0]) {
       otpRefs.current[0].focus();
@@ -46,6 +57,7 @@ const OtpInput = ({length = 6, onOtpChange, errorMessage}) => {
           value={digit}
           onChange={(e) => handleChange(e.target.value, index)}
           onKeyDown={(e) => handleKeyDown(e, index)}
+          onPaste={handlePaste}
           className="otp-box"
         />
       ))}
@@ -90,7 +102,7 @@ const Signup = () => {
 
   const isValidMobile = (number) => /^[0-9]{10}$/.test(number);
   const isValidPassword = (pass) =>
-    /^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/.test(pass);  
+    /^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/.test(pass);
   const isValidEmail = (email) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 
   const handleGetOtp = (e) => {
@@ -172,6 +184,13 @@ const Signup = () => {
               Sign up with Google
             </button>
 
+            {/* OR separator */}
+            <div className="or-separator">
+              <hr />
+              <span>OR</span>
+              <hr />
+            </div>
+
             <form onSubmit={handleGetOtp} className="auth-form">
               <div className="phone-number-container">
                 <input
@@ -211,11 +230,12 @@ const Signup = () => {
         )}
         {step === 2 && (
           <>
-            <h2>Enter OTP</h2>
             <p>
               A one-time password has been sent to this number{" "}
               {formatMobileNumber(mobile)}.
             </p>
+            <h4 className="enter-otp">Enter Verification Code</h4>
+
             <form onSubmit={handleNext} className="auth-form">
               <OtpInput
                 length={6}

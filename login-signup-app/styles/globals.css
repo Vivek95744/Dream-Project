@@ -1,4 +1,11 @@
 /* General Reset */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
 body {
   font-family: "Arial", sans-serif;
   background-color: #f8f9fa;
@@ -15,7 +22,7 @@ body {
   justify-content: center;
   align-items: center;
   height: 100vh;
-  background-image: url("../public/images/login-page-bg.webp");
+  /* background-image: url("../public/images/login-page-bg.webp"); */
   background-repeat: no-repeat;
   background-size: cover;
   padding: 20px;
@@ -23,11 +30,12 @@ body {
 
 /* Auth Card Styles */
 .auth-card {
-  width: 500px;
+  max-width: 600px;
+  width: 100%;
   background: #ffffff;
-  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.1);
   border-radius: 10px;
-  padding: 70px;
+  padding: 40px 50px 50px;
   text-align: center;
 }
 
@@ -49,7 +57,7 @@ body {
 .auth-form {
   display: flex;
   flex-direction: column;
-  gap: 15px;
+  gap: 20px;
 }
 
 .password-field {
@@ -72,32 +80,34 @@ body {
 
 .auth-input {
   padding: 16px;
-  font-size: 20px;
-  border: 1px solid #ddd;
-  border-radius: 5px;
+  font-size: 15px;
+  border: 2px solid rgb(221, 221, 221);
+  border-radius: 8px;
   width: 100%;
   box-sizing: border-box;
+  background-color: rgb(249, 249, 249);
 }
 
 .auth-input:focus {
-  border-color: #f57c00;
+  border-color: #007bff;
   outline: none;
-  box-shadow: 0 0 3px rgba(245, 124, 0, 0.5);
+  box-shadow: 0 0 3px #007bff;
 }
 
 .auth-button {
-  padding: 12px;
-  font-size: 16px;
-  background-color: #f57c00;
+  padding: 16px;
+  font-size: 18px;
+  font-weight: 200;
+  background-color: #007bff;
   color: white;
   border: none;
-  border-radius: 5px;
+  border-radius: 8px;
   cursor: pointer;
   transition: background-color 0.3s ease;
 }
 
 .auth-button:hover {
-  background-color: #d66900;
+  background-color: #0765ca;
 }
 
 /* Google Button */
@@ -105,17 +115,16 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 10px; /* Space between logo and text */
+  gap: 10px;
   width: 100%;
   padding: 6px;
-  font-size: 16px;
-  background-color: #ffffff;
-  color: #444444;
-  border: #7e7d7d solid;
+  font-size: 20px;
+  background-color: #fff;
+  color: #8e8686;
+  border: 1px solid #7e7d7d;
   border-radius: 10px;
   cursor: pointer;
-  margin-bottom: 20px;
-  transition: background-color 0.3s ease;
+  transition: background-color 0.3s;
 }
 
 .google-button:hover {
@@ -127,6 +136,26 @@ body {
   height: 35px;
 }
 
+/*  or   */
+
+.or-separator {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 31px 0;
+}
+
+.or-separator hr {
+  width: 41%;
+  border: 0;
+  border-top: 1px solid #a2a2a2;
+}
+
+.or-separator span {
+  margin: 0 10px;
+  /* font-weight: bold; */
+  color: #a2a2a2;
+}
 /* Footer Text */
 .auth-footer {
   font-size: 14px;
@@ -135,7 +164,7 @@ body {
 }
 
 .auth-link {
-  color: #f57c00;
+  color: #007bff;
   text-decoration: none;
 }
 
@@ -160,7 +189,8 @@ body {
 }
 
 .have-account .link-button {
-  color: #f57c00;
+  /* color: #f57c00; */
+  color: #007bff;
   background: none;
   border: none;
   cursor: pointer;
@@ -170,7 +200,7 @@ body {
 
 .have-account .link-button:hover {
   text-decoration: none;
-  color: #d66900;
+  color: #0765ca;
 }
 
 /* Phone Number Container */
@@ -201,7 +231,7 @@ body {
   padding: 16px;
   font-size: 20px;
   border: none; /* Remove default border */
-  outline: none; /* Remove focus outline */
+  outline: none; /* Rem#007bffe focus outline */
   color: #333; /* Text color */
   background-color: #f8f8f8;
   border-left: 1px solid #0003;
@@ -209,6 +239,10 @@ body {
 
 .mobile-number-input:focus {
   box-shadow: 0 0 3px rgba(245, 124, 0, 0.5); /* Subtle focus effect */
+}
+
+.enter-otp {
+  margin: 10px 0 20px 0;
 }
 
 .error-message {
@@ -225,12 +259,12 @@ body {
   display: flex;
   justify-content: center;
   gap: 10px;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
 }
 
 .otp-box {
-  width: 40px;
-  height: 40px;
+  width: 60px;
+  height: 60px;
   font-size: 18px;
   text-align: center;
   border: 1px solid #ccc;
@@ -242,8 +276,8 @@ body {
 }
 
 .otp-box:focus {
-  border-color: #f57c00;
-  box-shadow: 0 0 3px rgba(245, 124, 0, 0.5);
+  border-color: #007bff;
+  /* box-shadow: 0 0 3px rgba(245, 124, 0, 0.5); */
 }
 
 .otp-box::placeholder {
@@ -252,9 +286,12 @@ body {
 }
 
 .otp-box:hover {
-  border-color: #d66900;
+  border-color: #007bff;
 }
 
+.resend-otp {
+  margin: 20px 0 10px 0;
+}
 /* Responsive Design */
 @media (max-width: 480px) {
   .auth-card {
