@@ -90,7 +90,7 @@ const Signup = () => {
 
   const isValidMobile = (number) => /^[0-9]{10}$/.test(number);
   const isValidPassword = (pass) =>
-    /^(?=.[A-Z])(?=.\d)(?=.[@$!%?&])[A-Za-z\d@$!%*?&]{8,}$/.test(pass);
+    /^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/.test(pass);  
   const isValidEmail = (email) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 
   const handleGetOtp = (e) => {

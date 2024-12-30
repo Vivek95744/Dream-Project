@@ -1,7 +1,12 @@
+"use client";
+
 import Link from "next/link";
-// Import CSS
+import { useAuth } from "../pages/AuthContext";
+import "../styles/navbar.css";
 
 export default function Navbar() {
+  const { isLoggedIn, logout } = useAuth(); // Get login state and logout function
+
   return (
     <header>
       <nav className="navbar">
@@ -36,12 +41,29 @@ export default function Navbar() {
 
         {/* Right: Buttons */}
         <div className="navbar-buttons">
-          <Link href="/login" className="btn btn-login">
-            Login
-          </Link>
-          <Link href="/signup" className="btn btn-signup">
-            Sign Up
-          </Link>
+          {isLoggedIn ? (
+            <>
+              <div className="user-avatar">
+                <img
+                  src="/user.svg"
+                  alt="User Avatar"
+                  className="avatar-img"
+                />
+              </div>
+              <button onClick={logout} className="btn btn-logout">
+                Logout
+              </button>
+            </>
+          ) : (
+            <>
+              <Link href="/login" className="btn btn-login">
+                Login
+              </Link>
+              <Link href="/signup" className="btn btn-signup">
+                Sign Up
+              </Link>
+            </>
+          )}
         </div>
       </nav>
     </header>

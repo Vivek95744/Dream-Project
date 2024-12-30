@@ -1,15 +1,18 @@
 "use client";
 
 import Link from "next/link";
-import React, {useState, useEffect, useRef} from "react";
-import {useRouter} from "next/navigation";
+import React, { useState, useEffect, useRef } from "react";
+import { useRouter } from "next/navigation";
+import { useAuth } from "../pages/AuthContext";
 
 const Signin = () => {
   const router = useRouter();
   const emailInputRef = useRef(null);
+  const { login } = useAuth();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
 
   useEffect(() => {
     if (emailInputRef.current) {
@@ -29,10 +32,21 @@ const Signin = () => {
     };
   }, [router]);
 
-  const handleSignin = (e) => {
+  const handleSignin = async (e) => {
     e.preventDefault();
-    console.log("Signin successful:", {email, password});
-    alert("Signin successful!");
+
+    try {
+      // Mock authentication
+      if (email === "test@example.com" && password === "password") {
+        login(); // Set logged-in state
+        alert("Login successful!");
+        router.push("/"); // Redirect to main page
+      } else {
+        throw new Error("Invalid email or password.");
+      }
+    } catch (error) {
+      setErrorMessage(error.message);
+    }
   };
 
   return (
@@ -44,6 +58,7 @@ const Signin = () => {
           Sign up with Google
         </button>
         <form onSubmit={handleSignin} className="auth-form">
+          {errorMessage && <p className="auth-error">{errorMessage}</p>}
           <input
             ref={emailInputRef} // Autofocus the email input field
             type="email"
