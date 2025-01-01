@@ -5,9 +5,9 @@ import "../styles/index.css"; // Import the CSS for the slider
 export default function Home() {
   const [currentSlide, setCurrentSlide] = useState(0);
   const slides = [
-    "/images/slide-1.jpg",
-    "/images/slide-2.jpg",
-    "/images/slide-2.jpg",
+    // "/images/slide-1.jpg",
+    // "/images/slide-2.jpg",
+    // "/images/slide-2.jpg",
   ];
 
   // Function to go to the next slide
